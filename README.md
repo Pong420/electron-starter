@@ -7,6 +7,12 @@ Electron starter template that should support different frontend SPA template
 3. Install dependencies and make sure `dev` & `build` scripts exist in `renderer/package.json``
 4. If the output directory of the frontend template is not `build`. Repalce `build` in root `/package.json` and `electron/constants.ts`
 5. Change the localhost port number in `electron/src/main/index.ts`
+6. To use ipc api, make sure `electron-env.d.ts` is included in `renderer/tsconfig.json`
+   ```json
+   {
+     "include": ["../electron/electron-env.d.ts"]
+   }
+   ```
 
 ## Development
 
