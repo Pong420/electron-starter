@@ -9,7 +9,7 @@ module.exports = {
   productName: 'Electron Starter',
   // https://github.com/electron-userland/electron-builder/issues/3984
   electronVersion: pkg.devDependencies['electron'].replace(/^(~|\^)/, ''),
-  asar: false,
+  asar: true,
   directories: {
     app,
     output: 'release/${version}'

@@ -8,11 +8,10 @@
     "build": "pnpm run -r --parallel build && npm run build:clean",
     "build:clean": "rm -rf electron/build && cp -r renderer/build/ electron/build",
     "package": "npm run build && rm -rf release && electron-builder",
-    "pre-commit": "pnpm run --parallel pre-commit",
+    "pre-commit": "pnpm -r --workspace-concurrency=1  pre-commit",
     "prepare": "husky install"
   },
   "devDependencies": {
-    "@types/node": "^20.5.3",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.2"

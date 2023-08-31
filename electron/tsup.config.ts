@@ -1,17 +1,17 @@
 import { Options, defineConfig } from 'tsup';
 import { electronPreloadPlugin } from './plugins/electronPreloadPlugin';
-import { env } from './env';
-
-const isProduction = process.env.NODE_ENV === 'production';
+import { env, isEnvProduction } from './env';
 
 const options: Options = {
   splitting: false,
-  clean: isProduction,
-  sourcemap: isProduction,
-  minify: isProduction,
+  clean: isEnvProduction,
+  sourcemap: isEnvProduction,
+  minify: isEnvProduction,
   keepNames: true,
   format: ['cjs'],
   external: [/electron/],
+  // convert esm module to cjs
+  noExternal: [],
   define: {
     ...Object.entries(env).reduce(
       (e, [k, v]) => ({ ...e, [`process.env.${k}`]: JSON.stringify(v) }),

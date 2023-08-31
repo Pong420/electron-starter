@@ -14,9 +14,7 @@ export type BroadcastReceivers = BroadcastReceiver<typeof broadcasts>;
 export interface ElectronIPC extends Handlers, BroadcastSenders, BroadcastReceivers {}
 
 export const handlers = {
-  ...windowHandlers,
-
+  ...windowHandlers
 };
 
-export const broadcasts = {
-};
+export const broadcasts = {};
