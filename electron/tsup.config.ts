@@ -27,6 +27,6 @@ export default defineConfig([
     ...options,
     entry: ['src/**/*.ts', '!src/preload/**'],
     outDir: 'dist',
-    onSuccess: isEnvProduction && 'npx electron .'
+    onSuccess: isEnvDevelopment && 'npx electron .'
   }
 ]);
