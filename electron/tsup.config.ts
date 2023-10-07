@@ -7,7 +7,6 @@ const options: Options = {
   clean: isEnvProduction,
   sourcemap: isEnvProduction,
   minify: isEnvProduction,
-  watch: isEnvDevelopment,
   keepNames: true,
   format: ['cjs'],
   external: [/electron/],
@@ -27,6 +26,7 @@ export default defineConfig([
     ...options,
     entry: ['src/**/*.ts', '!src/preload/**'],
     outDir: 'dist',
+    bundle: false,
     onSuccess: isEnvDevelopment && 'npx electron .'
   }
 ]);

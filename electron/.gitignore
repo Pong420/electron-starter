@@ -3,3 +3,6 @@ build
 node_modules
 
 tsconfig.tsbuildinfo
+
+storage/*
+!storage/features
