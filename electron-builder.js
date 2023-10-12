@@ -12,7 +12,7 @@ module.exports = {
   asar: true,
   directories: {
     app,
-    output: 'release/${version}'
+    output: `release/${pkg.version}`
   },
   files: ['dist/**/*', 'build/**/*'],
   mac: {
