@@ -6,16 +6,16 @@ Electron starter template that should support different frontend SPA template
 2. Copy your frontend starter template to the `renderer` directory
 3. Install dependencies and make sure `dev` & `build` scripts exist in `renderer/package.json``
 4. If the output directory of the frontend template is not `build`. Repalce `build` in root `/package.json` and `electron/constants.ts`
-5. Change the localhost port number in `electron/src/main/index.ts`
-6. To use ipc, please refer to `electron/ipc/window.ts`. Make sure `electron/src/ipc/index.ts` is included in `renderer/tsconfig.json`
+5. Change the localhost port number in `electron/src/main/index.ts` if needed
+6. Make sure `renderer/tsconfig.json` contains below configuration
 
    ```json
    {
-     "include": ["../electron/src/ipc/index.ts"]
+     "include": ["../electron/src/ipc/index.ts", "../electron/electron-env.d.ts"]
    }
    ```
 
-   And use it as `adapter.isMouseOutsideOfWindow([window.innerWidth, window.innerHeight])`
+7. To use ipc, please refer to `electron/ipc/window.ts`. And use it as `adapter.isMouseOutsideOfWindow([window.innerWidth, window.innerHeight])`
 
 ## Development
 
