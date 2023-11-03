@@ -1,4 +1,4 @@
-import { Args, BroadcastReceiver, BroadcastSender } from './ipcCreator';
+import { Args, RequestReply, RequestReceiver, BroadcastReceiver, BroadcastSender } from './ipcCreator';
 import { windowHandlers } from './window';
 
 export type Handlers = {
@@ -8,10 +8,12 @@ export type Handlers = {
 };
 
 export type { Args } from './ipcCreator';
+export type RequestReplies = RequestReply<typeof requests>;
+export type RequestReceivers = RequestReceiver<typeof requests>;
 export type BroadcastSenders = BroadcastSender<typeof broadcasts>;
 export type BroadcastReceivers = BroadcastReceiver<typeof broadcasts>;
 
-export interface ElectronIPC extends Handlers, BroadcastSenders, BroadcastReceivers {}
+export interface ElectronIPC extends Handlers, BroadcastSenders, BroadcastReceivers, RequestReplies, RequestReceivers {}
 
 declare global {
   interface Window {
@@ -23,5 +25,7 @@ declare global {
 export const handlers = {
   ...windowHandlers
 };
+
+export const requests = {};
 
 export const broadcasts = {};

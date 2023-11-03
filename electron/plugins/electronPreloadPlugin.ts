@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Options } from 'tsup';
 import { bundleRequire } from 'bundle-require'; // deps of tsup
 
@@ -19,8 +23,9 @@ export const electronPreloadPlugin: NonNullable<Options['esbuildPlugins']>[numbe
       });
 
       const contents = JSON.stringify({
-        handlers: Object.keys(mod.handlers).reduce<Object>((p, c) => ({ ...p, [c]: {} }), {}),
-        broadcasts: Object.keys(mod.broadcasts).reduce<Object>((p, c) => ({ ...p, [c]: {} }), {})
+        handlers: Object.keys(mod.handlers).reduce<object>((p, c) => ({ ...p, [c]: {} }), {}),
+        requests: Object.keys(mod.requests).reduce<object>((p, c) => ({ ...p, [c]: {} }), {}),
+        broadcasts: Object.keys(mod.broadcasts).reduce<object>((p, c) => ({ ...p, [c]: {} }), {})
       });
 
       return {
