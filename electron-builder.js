@@ -14,10 +14,10 @@ module.exports = {
     app,
     output: `release/${pkg.version}`
   },
-  files: ['dist/**/*', 'build/**/*'],
+  files: ['dist/**/*', 'build/**/*', 'package.json'],
   mac: {
     artifactName: '${productName}_${version}.${ext}',
-    target: ['dmg', 'zip']
+    target: ['dmg', 'pkg', 'zip']
   },
   win: {
     target: [
