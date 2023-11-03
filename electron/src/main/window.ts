@@ -23,7 +23,7 @@ export let windowState = deepMerge(
 
 const setWindowState = (paylod: Partial<typeof initialWindowState>) => {
   windowState = { ...windowState, ...paylod };
-  fs.writeFile(windowStatePath, JSON.stringify(windowState, null, 2)).catch(console.error);
+  fs.outputFile(windowStatePath, JSON.stringify(windowState, null, 2)).catch(console.error);
 };
 
 const lastVisit = windowState.lastVisit;

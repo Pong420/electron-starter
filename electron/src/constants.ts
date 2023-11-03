@@ -1,3 +1,4 @@
+import fs from 'fs-extra';
 import path from 'node:path';
 import { app } from 'electron';
 
@@ -10,6 +11,8 @@ try {
   // userData it is not recommended to write large files here because some environments may backup this directory to cloud storage.
   storageDir = process.env.NODE_ENV === 'production' ? path.join(app.getPath('appData'), APP_ID) : app.getAppPath();
   storageDir = path.join(storageDir, 'storage');
+
+  fs.mkdirSync(storageDir, { recursive: true });
 } catch {
   //
 }
