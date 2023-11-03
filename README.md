@@ -6,7 +6,7 @@ Electron starter template that should support different frontend SPA template
 2. Copy your frontend starter template to the `renderer` directory
 3. Install dependencies and make sure `dev` & `build` scripts exist in `renderer/package.json``
 4. If the output directory of the frontend template is not `build`. Repalce `build` in root `/package.json` and `electron/constants.ts`
-5. Change the localhost port number in `electron/src/main/index.ts` if needed
+5. Change the localhost port number in `electron/src/main/window.ts` if needed
 6. Make sure `renderer/tsconfig.json` contains below configuration
 
    ```json
