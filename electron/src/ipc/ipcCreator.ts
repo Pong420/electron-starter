@@ -15,13 +15,15 @@ export type Handler<Args extends unknown[]> = (event: IpcMainInvokeEvent, ...arg
 // https://www.electronjs.org/docs/latest/tutorial/ipc#pattern-3-main-to-renderer
 export type Request = (req: any, resp: any) => any;
 
-export interface SendRequest<Response = unknown> {
-  (): Promise<Response[]>;
-  (target: BrowserWindow | IpcMainEvent | IpcMainInvokeEvent): Promise<Response>;
-  (target?: BrowserWindow | IpcMainEvent | IpcMainInvokeEvent): Promise<Response>;
+export interface SendRequest<Request = unknown, Response = unknown> {
+  (req: Request): Promise<Response[]>;
+  (target: BrowserWindow | IpcMainEvent | IpcMainInvokeEvent, req: Request): Promise<Response>;
 }
 export type RequestSender<Requests extends Record<string, Request>> = {
-  [K in keyof Requests as K extends string ? `${K}Request` : never]: SendRequest<Parameters<Requests[K]>[1]>;
+  [K in keyof Requests as K extends string ? `${K}Request` : never]: SendRequest<
+    Parameters<Requests[K]>[0],
+    Parameters<Requests[K]>[1]
+  >;
 };
 export type RequestReply<Requests extends Record<string, Request>> = {
   [K in keyof Requests as K extends string ? `reply${Capitalize<K>}Request` : never]: (
