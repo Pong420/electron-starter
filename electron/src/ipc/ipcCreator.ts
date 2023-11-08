@@ -57,7 +57,12 @@ export function createIpcRequests<H extends Record<string, Request>>(schema: H) 
       const key = `${k}Request`;
       return {
         ...senders,
-        [key]: (target?: BrowserWindow | IpcMainEvent | IpcMainInvokeEvent) => {
+        [key]: (...args: unknown[]) => {
+          const [target, payload] = (args.length === 1 ? [args[0]] : args.length === 2 ? [args[0], args[1]] : []) as [
+            (BrowserWindow | IpcMainEvent | IpcMainInvokeEvent)?,
+            unknown?
+          ];
+
           const win = target
             ? target instanceof BrowserWindow
               ? target
@@ -68,7 +73,7 @@ export function createIpcRequests<H extends Record<string, Request>>(schema: H) 
             return new Promise(resolve => {
               // should be same in electron/src/preload/index.ts and RequestReply, RequestReceiver
               const capitalized = key.charAt(0).toUpperCase() + key.slice(1);
-              win.webContents.send(key);
+              win.webContents.send(key, payload);
               ipcMain.once(`reply${capitalized}`, (event, resp) => resolve(resp));
             });
           };
