@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import fs from 'fs-extra';
 import path from 'node:path';
 import { BrowserWindow, shell, BrowserWindowConstructorOptions, net } from 'electron';
@@ -27,7 +26,7 @@ const setWindowState = (paylod: Partial<typeof initialWindowState>) => {
 };
 
 const lastVisit = windowState.lastVisit;
-const url = `http://localhost:3000/#${lastVisit}`;
+const url = `http://localhost:5173/#${lastVisit}`;
 const indexHtml = path.join(rendererDir, 'index.html');
 
 const preload = path.join(electronDir, 'preload', 'index.js');
