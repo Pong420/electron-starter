@@ -25,12 +25,7 @@ let win: BrowserWindow | null = null;
 
 function start() {
   handleProtocols();
-
   createMainWindow();
-
-  // TODO:
-  // Apply electron-updater
-  // update(window);
 }
 
 app.whenReady().then(start);

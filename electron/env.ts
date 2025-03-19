@@ -48,7 +48,7 @@ function getEnv<T extends Record<string, unknown>>(map: T) {
     // try to convert string into number or boolean
     try {
       result[key] = JSON.parse(raw[key]);
-    } catch (e) {
+    } catch {
       result[key] = raw[key];
     }
 
@@ -65,8 +65,8 @@ function getEnv<T extends Record<string, unknown>>(map: T) {
     [K in keyof T]: T[K] extends string | number | boolean
       ? T[K]
       : T[K] extends { default: string | number | boolean }
-      ? T[K]['default']
-      : string;
+        ? T[K]['default']
+        : string;
   };
 }
 

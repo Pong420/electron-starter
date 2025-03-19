@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BrowserWindow, IpcMainEvent, IpcMainInvokeEvent, ipcMain } from 'electron';
 
-export type Args<T extends (...args: any[]) => any> = Parameters<T> extends [infer F, ...infer R]
-  ? F extends BrowserWindow | IpcMainEvent | IpcMainInvokeEvent
-    ? [...R]
-    : [F, ...R]
-  : [];
+export type Args<T extends (...args: any[]) => any> =
+  Parameters<T> extends [infer F, ...infer R]
+    ? F extends BrowserWindow | IpcMainEvent | IpcMainInvokeEvent
+      ? [...R]
+      : [F, ...R]
+    : [];
 
 // renderer to main
 export type R2M<Args extends unknown[]> = (event: IpcMainInvokeEvent, ...args: Args) => unknown;
@@ -41,10 +42,10 @@ export type R2RSender<T extends Record<string, R2R<any[]>>> = {
 type ReceiverArgs<T> = T extends M2RWithReply
   ? T[0]
   : T extends M2RFn<any>
-  ? NonNullable<Args<T>[0]>
-  : T extends (...args: any[]) => any
-  ? Awaited<ReturnType<T>>
-  : never;
+    ? NonNullable<Args<T>[0]>
+    : T extends (...args: any[]) => any
+      ? Awaited<ReturnType<T>>
+      : never;
 
 export type Receiver<T extends Record<string, (...args: any[]) => any> | Record<string, M2RWithReply>> = {
   [K in keyof T as K extends string ? `on${Capitalize<K>}` : never]: (
@@ -60,7 +61,11 @@ export function createR2MIpc<Definition extends Record<string, R2M<any[]>>>(defi
   if (typeof ipcMain === 'undefined') return definition;
 
   for (const name in definition) {
-    ipcMain.handle(name, definition[name as keyof typeof definition]);
+    ipcMain.handle(name, async (event, ...args) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      const resp = definition[name as keyof typeof definition](event, ...args);
+      return await resp;
+    });
   }
 
   return definition;
@@ -149,16 +154,19 @@ export function createR2RIpc<Definition extends Record<string, R2R<any[]>>>(defi
             win => win.id !== fromWindow?.id && win.webContents.send(event, payload)
           );
 
+        // should be same in electron/src/preload/index.ts
+        // const replyName = `${name}`;
         if (resp instanceof Promise) {
           resp
-            //
             .then(payload => broadcast(name, payload))
-            .catch(error => event.reply('error', error));
+            .catch(error => {
+              throw error;
+            });
         } else {
           broadcast(name, resp);
         }
       } catch (error) {
-        event.reply('error', error);
+        console.error(error);
       }
     });
   }
