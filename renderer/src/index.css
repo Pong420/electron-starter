@@ -1,0 +1,84 @@
+@import 'tailwindcss';
+@config '../tailwind.config.ts';
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop {
+    @apply border-[#e5e5e5] dark:border-(--mantine-color-dark-4);
+  }
+}
+
+.min-h-screen {
+  min-height: 100vh; /* fallback */
+  min-height: 100svh;
+}
+
+.max-h-screen {
+  max-height: 100vh; /* fallback */
+  max-height: 100dvh;
+}
+
+@layer base {
+  html {
+    /* required for iframe with light theme  */
+    color-scheme: light dark;
+  }
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+    --card: var(--mantine-color-white);
+  }
+
+  [data-mantine-color-scheme='dark'] {
+    --radius: 0.5rem;
+    --card: var(--mantine-color-dark-6);
+  }
+}
+
+@layer base {
+  /* @import '@mantine/core/styles.css';
+  @import '@mantine/dates/styles.css';
+
+  :root {
+    --input-section-color: var(--mantine-color-text);
+    --combobox-chevron-color: var(--mantine-color-text);
+  } */
+}
+
+body {
+  font-family:
+    'Montserrat',
+    -apple-system,
+    'Arial',
+    'Helvetica',
+    sans-serif,
+    'Roboto',
+    'Oxygen',
+    'Ubuntu',
+    'Cantarell',
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue';
+}
+
+#root {
+  width: 100%;
+
+  min-height: 100vh; /* fallback */
+  min-height: 100dvh;
+
+  display: flex;
+  flex-direction: column;
+}
